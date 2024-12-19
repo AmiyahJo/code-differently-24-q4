@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @CrossOrigin
 public class MediaItemsController {
+
   private final Library library;
   private final Librarian librarian;
 
@@ -32,7 +32,7 @@ public class MediaItemsController {
   }
 
   @GetMapping("/items")
-  public GetMediaItemsResponse getItems() {
+  public ResponseEntity<GetMediaItemsResponse> getItems() {
     Set<MediaItem> items = library.search(SearchCriteria.builder().build());
     List<MediaItemResponse> responseItems = items.stream().map(MediaItemResponse::from).toList();
     var response = GetMediaItemsResponse.builder().items(responseItems).build();
